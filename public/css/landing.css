@@ -1,0 +1,31 @@
+body, html {
+	height: 100vh;
+	margin: 0;
+	font-family: Helvetica, Sans-Serif;
+	font-weight: 300;
+}
+
+.hero-image {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("../assets/loreynahero.png");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.landingPage {
+    margin: 0 auto 0 auto;
+    width: 100%;
+    min-height: 100vh;
+    /* For centering content */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#cta {
+  border-radius: 60px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+  padding: 25px;
+}

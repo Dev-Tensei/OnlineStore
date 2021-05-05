@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="css/style.css">
+	<title>Lo Reyna Landing Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- CSS only -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+</head>
+<header>
+  <div class="container">
+  <ul class="nav justify-content-start ml-4" style="background-color: #fff;">
+<!--     <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="#"><i class="fab fa-facebook-f" style="color: #6B7A90;"></i></a>
+    </li> -->
+    <li class="nav-item">
+      <a class="nav-link social-nav-links" href="#"><i class="fab fa-instagram"></i></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link social-nav-links" href="#"><i class="fab fa-pinterest"></i></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link social-nav-links" href="#"><i class="fab fa-tiktok"></i></a>
+    </li>
+    <li class="nav-item ml-auto">
+      <a class="nav-link social-nav-links" href="#">Account</a>
+    </li>
+  </ul>
+</div>
+  <div class="bar-test"></div>
+  <div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light">
+  <a class="navbar-brand ml-4" href="#">
+    <img src="assets/loreyna_logo_xxxs.png" alt="">
+  </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">Home <!-- <span class="sr-only">(current)</span> --></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Shop</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            About Us
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Our Store</a>
+            <a class="dropdown-item" href="#">Contact Us</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Blog</a>
+          </div>
+        </li>
+<!--         <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li> -->
+      </ul>
+      <!-- <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form> -->
+    </div>
+  </nav>
+</div>
+    <!-- Content here -->
+</header>
+
+<body>
+  <div id="app">
+
+    <v-app>
+      <v-main>
+
+          <div v-if="addMode">
+            <!-- <div v-if="errorMessages.length > 0">
+              There was a problem saving your pizza!
+              <ul>
+                <li v-for="error in errorMessages">
+                  {{ error }}
+                </li>
+              </ul>
+            </div> -->
+            Item Name: <input type="text" v-model="itemName"><br>
+            Item Price: <input type="text" v-model="itemPrice"><br>
+            Item Points: <input type="text" v-model="itemPoints"><br>
+            Item Quantity: <input type="text" v-model="itemQuantity"><br>
+            <button v-on:click="submitNewItem">Submit</button>
+          </div>
+
+          <div v-else>
+            <div v-if="currentItem">
+              <div class="container">
+                <h2>Item Info</h2>
+                Item Name: {{currentItem.item_name}}<br>
+                Item Price: {{currentItem.item_price}}<br>
+                Item Stock: {{currentItem.item_quantity}}<br>
+                <button @click="closeItemDetails">Close</button>
+              </div>
+              <div class="container" style="text-align: center;">
+                <div class="row">
+                  <div class="col-sm">
+                    <img class="card-img-top" src="assets/cactus.jpg" alt="Card image cap" style="border-style: solid;">
+                  </div>
+                  <div class="col-sm">
+                    <h1>{{currentItem.item_name}}</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        
+        <div class="container">
+          <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="row">
+              <div class="col-6 col-md">
+                <!-- <h5>Features</h5> -->
+                <ul class="list-unstyled text-small">
+                  <h5>Shop</h5>
+                  <li><a class="text-muted" href="#">All Items</a></li>
+                  <!-- <li><a class="text-muted" href="#">Random feature</a></li>
+                  <li><a class="text-muted" href="#">Team feature</a></li>
+                  <li><a class="text-muted" href="#">Stuff for developers</a></li>
+                  <li><a class="text-muted" href="#">Another one</a></li>
+                  <li><a class="text-muted" href="#">Last time</a></li> -->
+                </ul>
+              </div>
+              <div class="col-6 col-md">
+                <!-- <h5>Resources</h5> -->
+                <ul class="list-unstyled text-small">
+                  <h5>Resources</h5>
+                  <li><a class="text-muted" href="#">Contact</a></li>
+                </ul>
+              </div>
+              <div class="col-6 col-md">
+                <!-- <h5>Resources</h5> -->
+                <ul class="list-unstyled text-small">
+                  <h5>Privacy</h5>
+                  <li><a class="text-muted" href="#">Terms</a></li>
+                  <!-- <li><a class="text-muted" href="#">Resource name</a></li>
+                  <li><a class="text-muted" href="#">Another resource</a></li>
+                  <li><a class="text-muted" href="#">Final resource</a></li> -->
+                </ul>
+              </div>
+              <div class="col-6 col-md">
+
+                <!-- <h5>About</h5> -->
+                <ul class="list-unstyled text-small">
+                  <h5>Social</h5>
+                  <li style="display:inline-block;">
+                    <a class="nav-link social-nav-links" href="#"><i class="fab fa-instagram"></i></a>
+                  </li>
+                  <li style="display:inline-block;" >
+                    <a class="nav-link social-nav-links" href="#"><i class="fab fa-pinterest"></i></a>
+                  </li>
+                  <li style="display:inline-block;">
+                    <a class="nav-link social-nav-links" href="#"><i class="fab fa-tiktok"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </footer>
+        </div>
+  
+        <div class="container">
+          <div class="col-12" style="text-align: center;">
+            <img class="mb-2" src="assets/loreyna_logo_xxxs.png" alt="" width="96" height="48">
+            <small class="d-block mb-3 text-muted">&copy; 2020-2021</small>
+          </div>
+        </div>
+
+<!-- What is Lorem Ipsum?
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+Why do we use it?
+It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like). -->
+
+</v-main>
+</v-app>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="js/index.js"></script>
+<!-- 	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<script src="js/app.js"></script>
+ -->	<!-- JavaScript Bundle with Popper -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/4145c93563.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>

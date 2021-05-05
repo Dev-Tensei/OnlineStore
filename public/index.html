@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="css/style.css">
+	<title>Lo Reyna Main Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- CSS only -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <!-- <script src="js/values.js" async ></script> -->
+  <link rel="stylesheet" href="css/checkout.css" />
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+  <script src="js/client.js" defer></script>
+</head> 
+
+<style>
+  .modal {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(77, 77, 77, .7);
+    transition: all .4s;
+    margin-bottom: 40vh;
+  }
+
+  @media (max-width: 550px) {
+    .modal {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(77, 77, 77, .7);
+      transition: all .4s;
+      margin-bottom: 90vh;
+    }
+  }
+  .modal:target {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .modal__content {
+    border-radius: 4px;
+    position: relative;
+    width: 500px;
+    max-width: 90%;
+    background: #fff;
+    padding: 1em 2em;
+  }
+
+  .modal__footer {
+    text-align: right;
+    a {
+      color: #585858;
+    }
+    i {
+      color: #d02d2c;
+    }
+  }
+  .modal__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #585858;
+    text-decoration: none;
+  }
+/*  #continue #amt {
+    display: inline-flex;
+  }*/
+  #listings {
+    text-align: center;
+    margin-left: 3.5vw; 
+    margin-bottom: 5vh;
+  }
+
+  #itembox {
+    width: 20vw; 
+    padding: 10px;
+  }
+
+  @media (max-width: 900px) {
+    #listings {
+      text-align: center;
+      /*margin-left: 1vw; */
+      /*margin-bottom: 5vh;*/
+    }
+
+    #itembox {
+      width: 55%; 
+      padding: 10px;
+    } 
+  }
+
+  @media (max-width: 550px) {
+    #listings {
+      text-align: center;
+      /*margin-left: 1vw; */
+      /*margin-bottom: 5vh;*/
+    }
+
+    #itembox {
+      width: 85%; 
+      padding: 10px;
+    } 
+  }
+</style>
+
+<body>
+  <div id="app">
+    <v-app>
+      <v-main>
+        <header class="border-bottom">
+          <div class="container">
+          <ul class="nav justify-content-start ml-4" style="background-color: #fff;">
+        <!--     <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#"><i class="fab fa-facebook-f" style="color: #6B7A90;"></i></a>
+            </li> -->
+            <li class="nav-item">
+              <a class="nav-link social-nav-links" href="#"><i class="fab fa-instagram"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link social-nav-links" href="#"><i class="fab fa-pinterest"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link social-nav-links" href="#"><i class="fab fa-tiktok"></i></a>
+            </li>
+<!--             <li class="nav-item ml-auto">
+              <a class="nav-link social-nav-links" href="#" v-on:click="showLogin">Account</a>
+            </li> -->
+          </ul>
+        </div>
+          <div class="bar-test"></div>
+          <div class="container">
+          <nav class="navbar navbar-expand-lg navbar-light">
+          <a class="navbar-brand ml-4" href="#">
+            <img src="assets/loreyna_logo_xxxs.png" alt="">
+          </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+        
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                  <a class="nav-link" href="index.html">Home <!-- <span class="sr-only">(current)</span> --></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" v-on:click="showShop">Shop</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    About Us
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item disabled" href="#">Our Store</a>
+                    <a class="dropdown-item disabled" href="#">Contact Us</a>
+<!--                     <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Blog</a> -->
+                  </div>
+                </li>
+        <!--         <li class="nav-item">
+                  <a class="nav-link disabled" href="#">Disabled</a>
+                </li> -->
+              </ul>
+              <!-- <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form> -->
+            </div>
+          </nav>
+        </div>
+            <!-- Content here -->
+        </header>
+          <div v-if="homePage">
+            <div class="hero-image">
+              <section class="feature section landingPage">
+                <div class="container">
+                  <div class="section-inner">
+                    <div class="features-wrap">
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-sm" id="cta">
+                            <!-- <img src="assets/loreyna_logo_xs.png"> -->
+                            <h1 style="color: #fff;">Lo Reyna</h1>
+                            <!-- <hr> -->
+                            <p class="text-sm mb-0 hidden-xs" style="color: #fff;">We provide you a personalized experience and the cutest stickers you'll be able to find.</p>
+                            <br>
+<!--                           <form>
+                            <div class="form-group row">
+                              <div class="col-sm-10">
+                                <v-btn
+                                depressed
+                                color="error"
+                                v-on:click="showShop"
+                              >
+                                Shop Now
+                              </v-btn>
+                              </div>
+                            </div>
+                          </form> -->
+                          </div>
+                          <div class="col-sm">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> 
+              </section>
+            </div>
+          </div>
+
+          <div v-if="addMode">
+            <!-- <div v-if="errorMessages.length > 0">
+              There was a problem saving your pizza!
+              <ul>
+                <li v-for="error in errorMessages">
+                  {{ error }}
+                </li>
+              </ul>
+            </div> -->
+<!--             Item Name: <input type="text" v-model="itemName"><br>
+            Item Price: <input type="text" v-model="itemPrice"><br>
+            Item Points: <input type="text" v-model="itemPoints"><br>
+            Item Quantity: <input type="text" v-model="itemQuantity"><br>
+            <button v-on:click="submitNewItem">Submit</button> -->
+          </div>
+
+          <div v-else>
+            <div v-if="currentItem">
+              <div class="container">
+                <button @click="closeItemDetails"><i class="fas fa-arrow-left"></i> &nbsp;Back</button>
+              </div>
+              <div class="container" style="text-align: center;">
+                <div class="row">
+                  <div class="col-sm">
+                    <img class="card-img-top product-image" :src="(`${currentItem.img_url}`)" alt="Card image cap" style="border-style: solid; height: 550px; width: 350px;">
+                  </div>
+                  <div class="col-sm" style="text-align: left;">
+                    <h1 class="mb-2" id="product-title">{{currentItem.item_name}}</h1>
+                    <!-- <h4 class="product-price">399</h4> -->
+                    <h4 class="mb-5 product-price">$3.99</h4>
+                    <div class="mb-3">
+                      <p>1 Vinyl Sticker - Approx. Size: 2.5" x 3.5'</p>
+                    </div>
+                    <div class="mb-5">
+                      <ul class="list-unstyled text-small">
+                        <li>Durable</li>
+                        <li>Removable</li>
+                        <li>Waterproof</li>
+                        <li>Bubble-Free</li>
+                        <li><b>Free Shipping</b></li>
+                      </ul>
+                    </div>
+                    <div class="mb-3">
+                      <p>All stickers are packaged carefully and shipped within 1-2 business days. Orders with more than 3 stickers will recieve extra goodies.</p>
+                    </div>
+                    <a href="#demo-modal" class="btn btn-danger purchase-button text-white">Purchase</a>
+<!--                     <h6>Quantity</h6>
+                    <select class="form-select border mb-3" aria-label="Default select example" style="width: 90%; padding: 5px;">
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                      <option value="3">Four</option>
+                      <option value="3">Five</option>
+                      <option value="3">Six</option>
+                      <option value="3">Seven</option>
+                    </select>&nbsp;<i class="fas fa-chevron-down"></i> -->
+<!--                     <template>
+                      <v-btn block rounded color="error">
+                        Add to Cart
+                      </v-btn>
+                    </template> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            
+            <div v-else>
+              <div v-if="loginMode">
+                <button @click="closeLogin"><i class="fas fa-arrow-left"></i> &nbsp;Back</button>
+                <div class="container mt-5 mb-5" style="  margin: auto;
+                width: 40%;">
+                  <form class="form-signin text-center">
+                    <img class="mb-4" src="assets/loreyna_logo_xxxs.png" alt="" width="96" height="48">
+                    <h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
+                    <label for="inputEmail" class="sr-only">Email address</label>
+                    <input type="email" id="inputEmail" class="form-control mb-2" placeholder="Email address" required>
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                    <!-- <div class="checkbox mb-3">
+                      <label>
+                        <input type="checkbox" value="remember-me"> Remember me
+                      </label>
+                    </div> -->
+                    <button class="btn btn-lg btn-primary text-white mt-5" type="submit">Sign in</button>
+                    <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+                  </form>
+                </div>
+              </div>
+              <div v-else>
+                <div class="container">
+                  <ol class="user-list" style="background-color: #fff;">
+                    <hr>
+                    <li class="user-name" v-for="item in itemInfo" id="listings">
+                      <a class="item-link" v-on:click="showItemDetails(item)">
+                      <div class="card box" id="itembox">
+                        <img class="card-img-top" :src="(`${item.img_url}`)" width="300" height="300"  alt="Card image cap">
+                        <div class="card-body">
+                          
+                          <h5 class="card-title">$3.99</h5>
+                          <div class="card-text">{{item.item_name}}</div>
+                          <a class="item-link" v-on:click="showItemDetails(item)"></a>
+                          <!-- {{item.item_price}} -->
+                          <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                          <!-- <v-btn
+                          depressed
+                          color="error"
+                        >
+                          View
+                        </v-btn> -->
+                        </div>
+                      </div>
+                    </a>
+
+                      <!-- <a href="#"><img src="assets/cactus.jpg" height="100" width="100"></a>
+                      <p><b>{{item.item_name}}</b></p>
+                      <p>$<b>&nbsp;{{item.item_price}}</b></p>
+                      <p>Quantity:<b>&nbsp;{{item.item_quantity}}</b></p> -->
+
+                      <!-- <button v-on:click="deletePet">Delete</button> -->
+                    </li>
+                  </ol>
+                </div>
+<!--                 <section>
+                  <h3>Shopping Cart</h3>
+                  <div>
+                    <strong>Sticker</strong>
+                    &lt;&gt;
+                    <strong>Price</strong>
+                    &lt;&gt;
+                    <strong>Quantity</strong>
+                  </div>
+
+                  <div>
+                    <img src="https://loreyna.s3-us-west-2.amazonaws.com/loreynaimages/cactus.jpg" width="100" height="100">
+                    <span>Cactus</span>&lt;&gt;
+                    <span>$3.99</span>&lt;&gt;
+                    <input type="number" value="1">
+                    <button role="button">Remove</button>
+                  </div>
+                  <div>
+                    <img src="https://loreyna.s3-us-west-2.amazonaws.com/loreynaimages/vase.jpg" width="100" height="100">
+                    <span>Cuvase</span>&lt;&gt;
+                    <span>$3.99</span>&lt;&gt;
+                    <input type="number" value="1">
+                    <button role="button">Remove</button>
+                  </div>
+                  <hr>
+                  <div>
+                    <strong>Total</strong>
+                    <span>$6.89</span>
+                  </div>
+                  <div>
+                    <button role="button">Purchase</button>
+                  </div>
+                </section> -->
+              </div>
+            </div> <!--v-else div above loginMode -->
+
+          </div>
+                    <div id="demo-modal" class="modal">
+                        <div class="modal__content">
+                            <h1>Checkout</h1>
+                            <p>Please fill out the following:</p>
+                            <form>
+                            <div style="display: none;">Product: <input type="text" class="form-control" v-model="product"></div>
+                            Full Name: <input type="text" class="form-control" v-model="full_name" name="full_name" required />
+                            Email: <input type="text" class="form-control" v-model="ship_email" required/>
+                            Address: <input type="text" class="form-control" v-model="address" required/>
+                            Suite/apt: <input type="text" class="form-control" v-model="suite">
+                            City: <input type="text" class="form-control" v-model="city" required/>
+                            State: <input type="text" class="form-control" v-model="state" required/>
+                            Zip: <input type="text" class="form-control" v-model="zip" required/>
+                            <!-- <button v-on:click="submitItemName" class="btn btn-outline-danger">Submit</button>&nbsp; -->
+                            # of Stickers<input type="number" value="1" name="amount" min="1" id="amt" class="form-control" v-model="amount" required>
+                            
+                            Total: $<span id="tot">0</span>
+                            <button id="continue" class="btn btn-danger" style="float: right;">Continue</button>
+                            </form>
+                            <form id="payment-form">
+                              <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+                              <button v-on:click="submitShipping" id="submit" class="mt-3 mr-3">
+                                <div class="spinner hidden mr-3" id="spinner"></div>
+                                <span id="button-text">Pay now</span>
+                              </button>
+                              <p id="card-error" role="alert"></p>
+                              <p class="result-message hidden">
+                                Payment succeeded, see the result in your
+                                <a href="" target="_blank">Stripe dashboard.</a> Refresh the page to pay again.
+                              </p>
+                            </form>
+
+<!--                             <div class="modal__footer">
+                                Loreyna
+                            </div> -->
+
+                            <a href="#" class="modal__close">&times;</a>
+                        </div>
+                    </div>
+        
+        <div class="container">
+          <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="row">
+              <div class="col-6 col-md">
+                <!-- <h5>Features</h5> -->
+                <ul class="list-unstyled text-small">
+                  <h5>Shop</h5>
+                  <li><a class="text-muted" href="#">All Items</a></li>
+                  <!-- <li><a class="text-muted" href="#">Random feature</a></li>
+                  <li><a class="text-muted" href="#">Team feature</a></li>
+                  <li><a class="text-muted" href="#">Stuff for developers</a></li>
+                  <li><a class="text-muted" href="#">Another one</a></li>
+                  <li><a class="text-muted" href="#">Last time</a></li> -->
+                </ul>
+              </div>
+              <div class="col-6 col-md">
+                <!-- <h5>Resources</h5> -->
+                <ul class="list-unstyled text-small">
+                  <h5>Resources</h5>
+                  <li><a class="text-muted" href="#">Contact</a></li>
+                </ul>
+              </div>
+              <div class="col-6 col-md">
+                <!-- <h5>Resources</h5> -->
+                <ul class="list-unstyled text-small">
+                  <h5>Privacy</h5>
+                  <li><a class="text-muted" href="#">Terms</a></li>
+                  <!-- <li><a class="text-muted" href="#">Resource name</a></li>
+                  <li><a class="text-muted" href="#">Another resource</a></li>
+                  <li><a class="text-muted" href="#">Final resource</a></li> -->
+                </ul>
+              </div>
+              <div class="col-6 col-md">
+
+                <!-- <h5>About</h5> -->
+                <ul class="list-unstyled text-small">
+                  <h5>Social</h5>
+                  <li style="display:inline-block;">
+                    <a class="nav-link social-nav-links" href="#"><i class="fab fa-instagram"></i></a>
+                  </li>
+                  <li style="display:inline-block;" >
+                    <a class="nav-link social-nav-links" href="#"><i class="fab fa-pinterest"></i></a>
+                  </li>
+                  <li style="display:inline-block;">
+                    <a class="nav-link social-nav-links" href="#"><i class="fab fa-tiktok"></i></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </footer>
+        </div>
+  
+        <div class="container">
+          <div class="col-12" style="text-align: center;">
+            <img class="mb-2" src="assets/loreyna_logo_xxxs.png" alt="" width="96" height="48">
+            <small class="d-block mb-3 text-muted">&copy; 2020-2021</small>
+          </div>
+        </div>
+
+<!-- What is Lorem Ipsum?
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+Why do we use it?
+It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like). -->
+
+</v-main>
+</v-app>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="js/index.js"></script>
+<!-- 	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<script src="js/app.js"></script>
+ -->	<!-- JavaScript Bundle with Popper -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/5960a9d7f4.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+</body>
+</html>

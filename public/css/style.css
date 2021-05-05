@@ -1,0 +1,108 @@
+* {
+	font-family: 'Roboto', Sans-Serif;
+}
+body, html {
+	height: 100vh;
+	margin: 0;
+	/*font-family: 'Roboto', Sans-Serif;*/
+	/*font-weight: 300;*/
+}
+
+.hero-image {
+  /*background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("../assets/landing_background.png");*/
+  /*background-image: url("../assets/landing_background.png");*/
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../assets/loreynahero.png");
+  height: 50vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+.landingPage {
+    margin: 0 auto 0 auto;
+    width: 100%;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*#cta {
+	border-radius: 60px;
+	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+	padding: 25px;
+}*/
+
+ol.user-list {
+	max-width: 100%;
+	list-style: none;
+	padding-top: 3em;
+	padding-bottom: 3em;
+	}
+	ol.user-list li {
+		display: inline-block;
+		border-left: 5px solid #fff;
+	}
+	ol.user-list li p {
+		padding-right: 2em;
+		padding-left: 2em;
+	}
+ol.user-list li:last-of-type {
+	border-right: 5px solid #fff;
+}
+button {
+	background-color: #006E7D;
+	color: #fff;
+	font-size: 1em;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	padding-right: 2em;
+	padding-left: 2em;
+}
+
+hr {
+	border-top: 2px dashed #fff;
+	/*max-width: 100%;*/
+	margin-right: 3em;
+}
+a.social-nav-links {
+	color: #6B7A90;
+}
+.bar-test {
+	height: 3px;
+    background: linear-gradient(90deg,#F9AF94 5%,#FEDDB9 10%,#FEDDB9 15%,#F79B7E 80%);
+/*    position: fixed;
+    z-index: 1150;
+    margin-top: -141px;
+    width: 100%;*/
+}
+.box {
+	/* background: white; */
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+}
+  
+.box:hover {
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	/* animation-name: example; */
+	animation-duration: 0.25s;
+	/* border-left: 8px solid red; */
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.item-link {
+	color: #000!important;
+	text-decoration: none!important;
+}
+
+ul li a {
+	text-align: left!important;
+}
+  /* @keyframes example {
+	  0%   {border-left: 2px solid #ffffff;}
+	  25%  {border-left: 3px solid #ffe6e6;}
+	  50%  {border-left: 4px solid #ff8080;}
+	  100% {border-left: 5px solid #ff0000;}
+  } */

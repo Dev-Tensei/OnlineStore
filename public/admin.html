@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- <link rel="stylesheet" href="css/style.css"> -->
+  <title>Lo Reyna Landing Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- CSS only -->
+  <link rel="stylesheet" href="css/admin.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+</head>
+
+
+<body>
+  <div id="app">
+    <div v-if="loggedIn">
+        <div class="vertical-menu">
+          <a href="#" class="active">Welcome, Carina</a>
+<!--           <h6 style="margin-left: 2vw;"><i>STATISTICS</i></h6>
+          <a href="#"><i class="fas fa-chart-bar"></i> Dashboard</a> -->
+<!--           <h6 style="margin-left: 2vw;"><i>ANALYTICS</i></h6>
+          <a href="#"><i class="fas fa-chart-line"></i> Leads</a> -->
+          <h6 style="margin-left: 2vw;"><i>STORE</i></h6>
+          <a href="#" v-on:click="productsPage"><i class="fas fa-info-circle"></i> Products</a>
+          <a href="#" v-on:click="purchasePage"><i class="fas fa-dollar-sign"></i> Purchases</a>
+          <!-- <button v-on:click="logoutUser" href="#" class="btn btn-outline-secondary my-2 my-sm-0">Sign Out</button> -->
+        </div>
+        <nav class="navbar navbar-dark fixed-top" style="background-color: #F9AF94;">
+          <a class="navbar-brand" href="#"></a>
+          <form class="form-inline">
+          <button v-on:click="logoutUser" class="btn btn-outline-light my-2 my-sm-0">Sign Out</button>
+          </form>
+        </nav>
+      <div v-if="itemsPage">
+        <div style="margin-left: 5em;">
+    <!--      <div v-if="loginMode">
+            <form class="form-signin">
+              <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+              <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+              <label for="inputEmail" class="sr-only">Email address</label>
+              <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+              <label for="inputPassword" class="sr-only">Password</label>
+              <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+              <div class="checkbox mb-3">
+              <label>
+                <input type="checkbox" value="remember-me"> Remember me
+              </label>
+              </div>
+              <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+              <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+            </form>
+          </div> -->
+            <div class="content-container">
+              <h2 id="leads-title">Products</h2>
+              <div v-if="addMode">
+                <div v-if="errorMessages.length > 0">
+                  There was a problem saving your item:
+                  <ul>
+                    <li v-for="error in errorMessages">
+                    {{ error }}
+                    </li>
+                  </ul>
+                </div>
+                <div class="container">
+                  <div class="row">
+                    Item Name: <input type="text" class="form-control" v-model="item_name"><br>
+                    Item Price: <input type="text" class="form-control" v-model="item_price"><br>
+                    Item Points: <input type="text" class="form-control" v-model="item_points"><br>
+                    Item Quantity: <input type="text" class="form-control" v-model="item_quantity"><br>
+                    Item URL: <input type="text" class="form-control" v-model="img_url"><br><br>
+                    <button v-on:click="submitItemName" class="btn btn-outline-danger">Submit</button>&nbsp;
+                    <button @click="closeAddItem" class="btn btn-outline-danger">Close</button>
+                  </div>
+                </div>
+              </div>
+
+              <div v-else>
+                <div v-if="item">
+                  <h2>Item Info</h2>
+                  Item Name: <input type="text" v-model="item_name" class="form-control"><br>
+                  Item Price: <input type="text" v-model="item_price" class="form-control"><br>
+                  Item Points: <input type="text" v-model="item_points" class="form-control"><br>
+                  Item Quantity: <input type="text" v-model="item_quantity" class="form-control"><br>
+                  Item URL: <input type="text" v-model="img_url" class="form-control"><br><br>
+                  <!-- {{ currentLead._id }} -> <input type="text" v-model="currentLead._id"><br> -->
+                  <button @click="updateItem(item)" class="btn btn-outline-danger">Update</button>
+                  <button @click="closeCurrItem" class="btn btn-outline-danger">Close</button>
+                </div>
+                <div v-else>
+                  <button v-on:click="addItem" class="btn btn-outline-danger mb-3">Add Item</button>
+                  <!-- <button v-on:click="login" class="btn btn-outline-secondary my-2 my-sm-0">Sign In</button> -->
+                  <section id="three">
+                    <table class="blueTable">
+                      <thead>
+                        <tr>
+                          <th>Date</th>
+                          <th>Name</th>
+                          <th>Price</th>
+                          <th>Quantity</th>
+                          <th>Image URL</th>
+                          <th>Image</th>
+                          <th>Options</th>
+                        </tr>
+                      </thead>
+        <!--              <tfoot>
+                        <tr>
+                          <td colspan="6">
+                            <div class="links">
+                              <a href="#">&laquo;</a> 
+                              <a class="active" href="#">1</a> 
+                              <a href="#">2</a> 
+                              <a href="#">3</a> 
+                              <a href="#">4</a> 
+                              <a href="#">&raquo;</a></div>
+                          </td>
+                        </tr>
+                      </tfoot> -->
+                      <tbody>
+                        <tr>
+                          <td><li class="user-name" v-for="item in itemInfo" style="list-style-type: none;"><p>{{ item.dateSubmitted | format }}</p></li></td>
+                          <td><li class="user-name" v-for="item in itemInfo" style="list-style-type: none;"><p>{{item.item_name}}</p></li></td>
+                          <td><li class="user-name" v-for="item in itemInfo" style="list-style-type: none;"><p>{{item.item_price}}</p></li></td>
+                          <td><li class="user-name" v-for="item in itemInfo" style="list-style-type: none;"><p>{{item.item_quantity}}</p></li></td>
+                          <td><li class="user-name" v-for="item in itemInfo" style="list-style-type: none;"><p>{{item.img_url}}</p></li></td>
+                          <td><li class="user-name" v-for="item in itemInfo" style="list-style-type: none;"><img :src="(`${item.img_url}`)" width="25" height="25" class="mb-2"></li></td>
+                          <td><li class="user-name" v-for="item in itemInfo" style="list-style-type: none;"><p>
+                            <!-- <a href="#">View</a>&nbsp;&nbsp; -->
+                            <a v-on:click="showCurrItem(item)" href="#"><i class="fas fa-edit" style="color: #000;"></i></a>
+                            <a href="#" style="color: red;" v-on:click="deleteItem( item )"><i class="fas fa-trash-alt"></i></a></p></li></td>
+                          <!-- <td><li class="user-name" v-for="lead in leadInfo" style="list-style-type: none;"><p>{{lead.comments}}</p></li></td> -->
+                        </tr>
+                      </tbody>
+                    </table>
+            <!--        <ol class="lead-list">
+                      <li class="user-name" v-for="lead in leadInfo"><p>{{ lead.dateSubmitted | format }}</p></li>
+                      <li class="user-name" v-for="lead in leadInfo"><p>{{lead.firstName}}&nbsp;{{lead.lastName}}</p></li>
+                      <li class="user-name" v-for="lead in leadInfo"><p>{{lead.phone}}</p></li>
+                      <li class="user-name" v-for="lead in leadInfo"><p>{{lead.email}}</p></li>
+                      <li class="user-name" v-for="lead in leadInfo"><p>{{lead.contact}}</p></li>
+                      <li class="user-name" v-for="lead in leadInfo"><p>{{lead.comments}}</p></li>
+                    </ol> -->
+            <!--        <ol class="lead-list">
+                        <li class="user-name" v-for="lead in leadInfo"><p><a href="#">View</a></p></li>
+                    </ol> -->
+                  </section>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div v-else>
+        <div style="margin-left: 5em;">
+    <!--      <div v-if="loginMode">
+            <form class="form-signin">
+              <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+              <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+              <label for="inputEmail" class="sr-only">Email address</label>
+              <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+              <label for="inputPassword" class="sr-only">Password</label>
+              <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+              <div class="checkbox mb-3">
+              <label>
+                <input type="checkbox" value="remember-me"> Remember me
+              </label>
+              </div>
+              <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+              <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+            </form>
+          </div> -->
+            <div class="content-container">
+              <h2 id="leads-title">Purchases</h2>
+              <div v-if="addMode">
+                <div v-if="errorMessages.length > 0">
+                  There was a problem saving your item:
+                  <ul>
+                    <li v-for="error in errorMessages">
+                    {{ error }}
+                    </li>
+                  </ul>
+                </div>
+                <div class="container">
+                  <div class="row">
+                    Item Name: <input type="text" class="form-control" v-model="item_name"><br>
+                    Item Price: <input type="text" class="form-control" v-model="item_price"><br>
+                    Item Points: <input type="text" class="form-control" v-model="item_points"><br>
+                    Item Quantity: <input type="text" class="form-control" v-model="item_quantity"><br>
+                    Item URL: <input type="text" class="form-control" v-model="img_url"><br><br>
+                    <button v-on:click="submitItemName" class="btn btn-outline-danger">Submit</button>&nbsp;
+                    <button @click="closeAddItem" class="btn btn-outline-danger">Close</button>
+                  </div>
+                </div>
+              </div>
+
+              <div v-else>
+                <div v-if="item">
+                  <h2>Item Info</h2>
+                  Item Name: <input type="text" v-model="item_name" class="form-control"><br>
+                  Item Price: <input type="text" v-model="item_price" class="form-control"><br>
+                  Item Points: <input type="text" v-model="item_points" class="form-control"><br>
+                  Item Quantity: <input type="text" v-model="item_quantity" class="form-control"><br>
+                  Item URL: <input type="text" v-model="img_url" class="form-control"><br><br>
+                  <button @click="updateItem(item)" class="btn btn-outline-danger">Update</button>
+                  <button @click="closeCurrItem" class="btn btn-outline-danger">Close</button>
+                </div>
+                <div v-else>
+                  <!-- <button v-on:click="addItem" class="btn btn-outline-danger mb-3">Add Item</button> -->
+                  <!-- <button v-on:click="login" class="btn btn-outline-secondary my-2 my-sm-0">Sign In</button> -->
+                  <section id="three">
+                    <table class="blueTable">
+                      <thead>
+                        <tr>
+                          <th>Item</th>
+                          <th>Amount</th>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Address</th>
+                          <!-- <th>Suite</th> -->
+                          <th>City</th>
+                          <th>State</th>
+                          <th>Zip</th>
+                        </tr>
+                      </thead>
+        <!--              <tfoot>
+                        <tr>
+                          <td colspan="6">
+                            <div class="links">
+                              <a href="#">&laquo;</a> 
+                              <a class="active" href="#">1</a> 
+                              <a href="#">2</a> 
+                              <a href="#">3</a> 
+                              <a href="#">4</a> 
+                              <a href="#">&raquo;</a></div>
+                          </td>
+                        </tr>
+                      </tfoot> -->
+                      <tbody>
+                        <tr>
+                          <td><li class="user-name" v-for="shipping in shippingInfo" style="list-style-type: none;"><p>{{ shipping.product }}</p></li></td>
+                          <td><li class="user-name" v-for="shipping in shippingInfo" style="list-style-type: none;"><p>{{shipping.amount}}</p></li></td>
+                          <td><li class="user-name" v-for="shipping in shippingInfo" style="list-style-type: none;"><p>{{shipping.full_name}}</p></li></td>
+                          <td><li class="user-name" v-for="shipping in shippingInfo" style="list-style-type: none;"><p>{{shipping.ship_email}}</p></li></td>
+                          <td><li class="user-name" v-for="shipping in shippingInfo" style="list-style-type: none;"><p>{{shipping.address}}</p></li></td>
+<!--                           <td><li class="user-name" v-for="shipping in shippingInfo" style="list-style-type: none;"><p>{{shipping.suite}}</p></li></td> -->
+                          <td><li class="user-name" v-for="shipping in shippingInfo" style="list-style-type: none;"><p>{{shipping.city}}</p></li></td>
+                          <td><li class="user-name" v-for="shipping in shippingInfo" style="list-style-type: none;"><p>{{shipping.state}}</p></li></td>
+                          <td><li class="user-name" v-for="shipping in shippingInfo" style="list-style-type: none;"><p>{{shipping.zip}}</p></li></td>
+ <!--                          <td><li class="user-name" v-for="shipping in shippingInfo" style="list-style-type: none;"><p> -->
+                            <!-- <a href="#">View</a>&nbsp;&nbsp; -->
+<!--                             <a v-on:click="showCurrItem(item)" href="#"><i class="fas fa-edit" style="color: #000;"></i></a> -->
+<!--                             <a href="#" style="color: red;" v-on:click="deleteItem( item )"><i class="fas fa-trash-alt"></i></a></p></li></td> -->
+                          <!-- <td><li class="user-name" v-for="lead in leadInfo" style="list-style-type: none;"><p>{{lead.comments}}</p></li></td> -->
+                        </tr>
+                      </tbody>
+                    </table>
+            <!--        <ol class="lead-list">
+                      <li class="user-name" v-for="lead in leadInfo"><p>{{ lead.dateSubmitted | format }}</p></li>
+                      <li class="user-name" v-for="lead in leadInfo"><p>{{lead.firstName}}&nbsp;{{lead.lastName}}</p></li>
+                      <li class="user-name" v-for="lead in leadInfo"><p>{{lead.phone}}</p></li>
+                      <li class="user-name" v-for="lead in leadInfo"><p>{{lead.email}}</p></li>
+                      <li class="user-name" v-for="lead in leadInfo"><p>{{lead.contact}}</p></li>
+                      <li class="user-name" v-for="lead in leadInfo"><p>{{lead.comments}}</p></li>
+                    </ol> -->
+            <!--        <ol class="lead-list">
+                        <li class="user-name" v-for="lead in leadInfo"><p><a href="#">View</a></p></li>
+                    </ol> -->
+                  </section>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div> <!-- v-else div --> 
+
+    </div> <!-- outter div -->
+
+    <div v-else>
+      <!-- <div v-if="!signUp"> -->
+        <div class="half-n-half">
+          <div class="left">
+            <h2><b>Welcome, Carina.</b></h2>
+            <!-- <p>View, Edit, and Delete your leads as needed.</p> -->
+          </div>
+          <div class="right">
+            <form>
+              <img class="mb-4 ml-5" src="assets/loreyna_logo_xxs.png" alt="" width="125" height="72">
+              <!-- <h1 class="h3 mb-3 font-weight-normal">Sign In</h1> -->
+              <!-- <label for="inputEmail" class="sr-only">Email address</label> -->
+              <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus v-model="userEmail"><br>
+              <!-- <label for="inputPassword" class="sr-only">Password</label> -->
+              <input type="password" id="inputPassword" class="form-control" placeholder="Password" required v-model="plainPassword"><br>
+              <button v-on:click="submitLogin" class="btn btn-outline-danger btn-block" type="submit">Sign in</button>
+              <!-- <button v-on:click="submitLogin" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button> -->
+              <br>
+<!--               <div class="checkbox mb-3">
+                <a v-on:click="createAcc" href="#" style="margin-left: 35%">Sign Up</a>
+              </div> -->
+            </form>
+          </div>
+  <!--        <div class="row">
+            <div class="col-sm">
+              One of three columns
+            </div>
+            <div class="col-sm" style="background-color: #fff; height: 100vh; margin-left:">
+            </div>
+          </div> -->
+        </div>
+      <!-- </div> -->
+<!--       <div v-else>
+        <div class="half-n-half">
+          <div class="left">
+            <h2>Welcome To The Backend</h2>
+            <p>View, Edit, and Delete your leads as needed.</p>
+          </div>
+          <div class="right">
+            <form>
+              <div v-if="signUpMessages.length > 0">
+                Please note the following:
+                <ul>
+                  <li v-for="error in signUpMessages">
+                  {{ error }}
+                  </li>
+                </ul>
+              </div>
+              <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
+
+              <input type="email" v-model="userEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus><br>
+
+
+              <input type="text" v-model="firstName" id="inputEmail" class="form-control" placeholder="First Name" required autofocus><br>
+
+
+              <input type="text" v-model="lastName" id="inputEmail" class="form-control" placeholder="Last Name" required autofocus><br>
+
+
+              <input type="password" v-model="plainPassword" id="inputPassword" class="form-control" placeholder="Password" required><br>
+
+              <button v-on:click="submitUser" class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+              <br>
+              <div class="checkbox mb-3">
+                <a v-on:click="logAcc" href="#" style="margin-left: 35%">Sign In</a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="js/admin.js"></script>
+<!--  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="js/app.js"></script>
+ -->  <!-- JavaScript Bundle with Popper -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/5960a9d7f4.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>

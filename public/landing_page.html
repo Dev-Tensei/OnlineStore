@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="css/landing.css">
+	<title>Lo Reyna Landing Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+<body>
+	<div id="app" class="hero-image">
+            <section class="feature section landingPage">
+              <div class="container">
+                <div class="section-inner">
+                  <div class="features-wrap">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-sm" id="cta">
+                        	<img src="assets/loreyna_logo_xs.png">
+                          <h1 style="color: #fff;">Coming Soon!</h1>
+                          <hr>
+                          <p class="text-sm mb-0 hidden-xs" style="color: #fff;">The LoReyna site is <strong>Coming Soon!</strong> Submit your email to get notified on as I approach my launch date to get some <strong>deals!</strong> Go ahead and follow me on social media to be sure to catch early launch deals as well.</p>
+                          <br>
+							<form>
+							  <div class="form-group row">
+							    <!-- <label for="colFormLabelLg" class="col-sm-2 col-form-label col-form-label-lg" style="color: #fff;">Email</label> -->
+							    <div class="col-sm-10">
+							      <!-- <input type="email" class="form-control form-control-lg" id="colFormLabelLg" > -->
+									<div id="emailsub" class="input-group mb-3">
+									  <input type="text" class="form-control" placeholder="E-mail" v-model="email">
+									  <div class="input-group-append">
+									    <button class="btn btn btn-primary" type="button" v-on:click="submitLead">Submit</button>
+									  </div>
+									</div>
+							    </div>
+							  </div>
+							</form>
+                        </div>
+                        <div class="col-sm">
+                          <!-- <img src="assets/loreyna_logo.png"> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+	</div>
+<!-- 	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<script src="js/app.js"></script>
+ -->	<!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="js/landing.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>

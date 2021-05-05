@@ -1,4 +1,4 @@
-# LoReyna
+# LoReyna Store
 
 A web app that allows users to view and purchase items available. This project also has a backend tool that has a CRUD structured server in order to manage inventory and display purchasing information.
 
@@ -13,7 +13,7 @@ The backend tool has a login/registration functionality via Passport middleware 
 * Passport (Server)
 * MongoDB (Database)
 
-![DragonBall Roster Show Case](https://github.com/Dev-Tensei/QuickReference/blob/main/client/images/homepage.png?raw=true)
+![DragonBall Roster Show Case](https://github.com/Dev-Tensei/OnlineStore/blob/main/public/assets/homepage.png?raw=true)
 
 ## Items Resource
 
@@ -104,13 +104,13 @@ Retrieve a Lead     	  				  | GET    | /leads
 Create a Lead     	  					  | POST   | /leads
 
 ## Backend Login/Registration Functionality
-![DragonBall Roster Show Case](https://github.com/Dev-Tensei/QuickReference/blob/main/client/images/homepage.png?raw=true)
+![DragonBall Roster Show Case](https://github.com/Dev-Tensei/OnlineStore/blob/main/public/assets/login.png?raw=true)
 
 ## Item View Display
-![DragonBall Roster Show Case](https://github.com/Dev-Tensei/QuickReference/blob/main/client/images/homepage.png?raw=true)
+![DragonBall Roster Show Case](https://github.com/Dev-Tensei/OnlineStore/blob/main/public/assets/itemview.png?raw=true)
 
 ## Purchasing Functionality
-![DragonBall Roster Show Case](https://github.com/Dev-Tensei/QuickReference/blob/main/client/images/homepage.png?raw=true)
+![DragonBall Roster Show Case](https://github.com/Dev-Tensei/OnlineStore/blob/main/public/assets/purchase.png?raw=true)
 
 
 ### This is a work in progress, potential future updates include:
